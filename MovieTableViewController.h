@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MovieTableViewController.h
 //  tomatoes
 //
 //  Created by Andy Rhee on 1/10/14.
@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Movie.h"
 
-@interface ViewController : UIViewController
+@interface MovieTableViewController : UITableViewController
 
 @end
