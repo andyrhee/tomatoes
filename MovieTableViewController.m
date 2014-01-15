@@ -9,11 +9,12 @@
 #import "MovieTableViewController.h"
 #import "MovieViewController.h"
 #import "MovieCell.h"
+#import "Movie.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface MovieTableViewController ()
 
-@property (nonatomic, strong) NSArray *movies;
-@property (nonatomic, strong) NSDictionary *movie;
+@property (nonatomic, strong) NSMutableArray *movies;
 
 @end
 
@@ -31,15 +32,20 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
+        self.movies = [[NSMutableArray alloc] init];
+        
         NSString *url = @"http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey=g9au4hv6khv6wzvzgt55gpqs";
         
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
-            self.movies = [object valueForKeyPath:@"movies"];
+            for (NSDictionary *movie in [object valueForKeyPath:@"movies"]) {
+                Movie *obj = [[Movie alloc] initWithDictionary:movie];
+                [self.movies addObject:obj];
+            }
             
-            //NSLog(@"%@", object);
+            NSLog(@"%@", object);
             
             [self.tableView reloadData];
         }];
@@ -85,52 +91,18 @@
     static NSString *CellIdentifier = @"MovieCell";
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    self.movie = [self.movies objectAtIndex:indexPath.row];
+    Movie *movie = [self.movies objectAtIndex:indexPath.row];
     
-    NSArray *casts = [self.movie objectForKey:@"abridged_cast"];
+    NSLog(@"movie: %@", movie);
     
-    //NSLog(@"%@", casts);
+    cell.movieTitleLabel.text = movie.title;
+    cell.movieSynopsisLabel.text = movie.synopsis;
+   
     
-    NSMutableString *stringOfcasts;
-    stringOfcasts = [NSMutableString stringWithCapacity:50];
+    //NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: url]];
+    //cell.posterThumbnailImageView.image = [UIImage imageWithData: imageData];
     
-    for (int i = 0 ; i < casts.count ; i++) {
-        NSDictionary *cast = casts[i];
-        NSString *actor = [cast objectForKey:@"name"];
-        
-        //NSLog(@"%@: %@", @"Actor", actor);
-        
-        [stringOfcasts  appendFormat:@"%@, ", actor];
-        
-        //NSLog(@"%@: %@", @"stringOfcasts", stringOfcasts);
-    }
-    
-    //NSLog(@"%@", stringOfcasts);
-    
-    cell.movieTitleLabel.text = [self.movie objectForKey:@"title"];
-    cell.movieSynopsisLabel.text = [self.movie objectForKey:@"synopsis"];
-    cell.movieCastLabel.text = stringOfcasts;
-    
-    NSDictionary *posters = [self.movie objectForKey:@"posters"];
-    // NSLog(@"%@", posters);
-    
-    NSString *url = [posters valueForKey:@"thumbnail"];
-    
-    //NSLog(@"%@", url);
-    /*
-    dispatch_async(dispatch_get_global_queue(0,0), ^{
-        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:url]];
-        if ( data == nil )
-            return;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // WARNING: is the cell still using the same data by this point??
-            cell.imageView.image = [UIImage imageWithData: data];
-        });
-    });
-    */
-    NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: url]];
-    cell.posterThumbnailImageView.image = [UIImage imageWithData: imageData];
-    
+    [cell.posterThumbnailImageView setImageWithURL:[NSURL URLWithString:movie.thumbnail_url]];
     return cell;
 }
 
@@ -176,7 +148,17 @@
 
 #pragma mark - Navigation
 
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    UITableViewCell *selectedCell = (UITableViewCell *)sender;
+//    NSIndexPath *indexPath = [self.tableView indexPathForCell:selectedCell];
+//    Movie *movie = self.movies[indexPath.row];
+//
+//    MovieViewController *movieViewController = (MovieViewController *)segue.destinationViewController;
+//    movieViewController.movie = movie;
+//}
+
 // In a story board-based application, you will often want to do a little preparation before navigation
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Get the new view controller using [segue destinationViewController].
@@ -185,13 +167,11 @@
     //NSLog(@"sender: %@", sender);
     //NSLog(@"segue id: %@", [segue identifier]);
     
-    
     if ([[segue identifier] isEqualToString:@"ShowMovieDetails"]) {
         MovieViewController *detailViewController = [segue destinationViewController];
         
-        detailViewController.movieDictionary = [self.movies objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+        detailViewController.movie = [self.movies objectAtIndex:[self.tableView indexPathForSelectedRow].row];
     }
-
 }
 
 

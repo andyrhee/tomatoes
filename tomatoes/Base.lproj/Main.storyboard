@@ -48,10 +48,10 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="movieCastLabel" destination="dSI-FR-IgV" id="oEe-hH-AQF"/>
-                                    <outlet property="movieSynopsisLabel" destination="7No-Jl-HOC" id="xGK-Zq-6ck"/>
-                                    <outlet property="movieTitleLabel" destination="0X7-1h-fRP" id="jE6-fv-DwW"/>
-                                    <outlet property="posterThumbnailImageView" destination="eUN-XT-XaJ" id="KTK-wj-y2b"/>
+                                    <outlet property="movieCastLabel" destination="dSI-FR-IgV" id="yaO-SA-ImL"/>
+                                    <outlet property="movieSynopsisLabel" destination="7No-Jl-HOC" id="LYa-1l-uXE"/>
+                                    <outlet property="movieTitleLabel" destination="0X7-1h-fRP" id="gDW-vr-3od"/>
+                                    <outlet property="posterThumbnailImageView" destination="eUN-XT-XaJ" id="c5e-ir-bZa"/>
                                     <segue destination="CSl-bp-9Fi" kind="push" identifier="ShowMovieDetails" id="Poz-Qq-0Vw"/>
                                 </connections>
                             </tableViewCell>
@@ -86,7 +86,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Synopsis" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="305" translatesAutoresizingMaskIntoConstraints="NO" id="lCF-iw-B9a">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Synopsis Details" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="305" translatesAutoresizingMaskIntoConstraints="NO" id="lCF-iw-B9a">
                                 <rect key="frame" x="7" y="313" width="305" height="235"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -110,10 +110,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Movie Details" id="Pau-Aj-5rl"/>
                     <connections>
-                        <outlet property="movieCastsLabel" destination="ISS-xZ-zzf" id="3C4-re-bAv"/>
-                        <outlet property="movieHeader" destination="Pau-Aj-5rl" id="G93-2F-rVy"/>
-                        <outlet property="movieSummaryLabel" destination="lCF-iw-B9a" id="cng-4u-nbN"/>
-                        <outlet property="posterImageView" destination="LqL-qk-zWM" id="ecM-6Z-EQN"/>
+                        <outlet property="movieCastsLabel" destination="ISS-xZ-zzf" id="0d9-9n-j89"/>
+                        <outlet property="movieHeader" destination="Pau-Aj-5rl" id="8RJ-7v-LYs"/>
+                        <outlet property="movieSummaryLabel" destination="lCF-iw-B9a" id="Qu0-OU-hfN"/>
+                        <outlet property="posterImageView" destination="LqL-qk-zWM" id="8uN-Mp-gKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5bS-s7-kSz" userLabel="First Responder" sceneMemberID="firstResponder"/>

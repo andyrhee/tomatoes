@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Movie.h"
 
 @interface MovieViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet UIView *movieView;
-@property (nonatomic, strong) NSDictionary *movieDictionary;
+@property (nonatomic, weak) IBOutlet UIView *movieView;
+@property (nonatomic, strong) Movie *movie;
 
 @end
